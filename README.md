@@ -6,7 +6,7 @@ Este projeto é a parte do backend do trabalho final da disciplina Desenvolvimen
 
 1. Clone o repositório:
     ```bash
-    git clone <url-do-repositorio>
+    git clone https://github.com/Mateus-X/devweb1-api.git
     cd devweb1-api
     ```
 
