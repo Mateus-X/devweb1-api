@@ -1,1 +1,0 @@
-import { PrismaService } from "@db";
