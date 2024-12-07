@@ -14,13 +14,13 @@ export class ProjectsService {
   }
 
   findAll() {
-    return this.prismaService.project.findMany({ include: { creator: true } });
+    return this.prismaService.project.findMany({ include: { creator: true, tasks: true } });
   }
 
   findOne(id: number) {
     return this.prismaService.project.findUnique({
       where: { id },
-      include: { creator: true },
+      include: { creator: true, tasks: true },
     });
   }
 

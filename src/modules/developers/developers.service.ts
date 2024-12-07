@@ -13,14 +13,14 @@ export class DevelopersService {
 
   findAll() {
     return this.prismaService.developer.findMany({
-      include: { projects: true },
+      include: { projects: true, tasks: true },
     });
   }
 
   findOne(id: number) {
     return this.prismaService.developer.findUnique({
       where: { id },
-      include: { projects: true },
+      include: { projects: true, tasks: true },
     });
   }
 
