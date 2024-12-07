@@ -18,7 +18,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@db": ["./src/db/prisma.service"]
+      "@db": ["./src/prisma/prisma.service"]
     }
   }
 }
