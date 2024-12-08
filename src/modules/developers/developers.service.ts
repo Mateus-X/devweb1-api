@@ -1,3 +1,4 @@
+// src/modules/developers/developers.service.ts
 import { Injectable } from '@nestjs/common';
 import { CreateDeveloperDto } from './dto/create-developer.dto';
 import { UpdateDeveloperDto } from './dto/update-developer.dto';
@@ -13,14 +14,14 @@ export class DevelopersService {
 
   findAll() {
     return this.prismaService.developer.findMany({
-      include: { projects: true, tasks: true },
+      include: { tasks: true },
     });
   }
 
   findOne(id: number) {
     return this.prismaService.developer.findUnique({
       where: { id },
-      include: { projects: true, tasks: true },
+      include: { projectDevelopers: true, tasks: true },
     });
   }
 
@@ -28,6 +29,13 @@ export class DevelopersService {
     return this.prismaService.developer.update({
       where: { id },
       data: updateDeveloperDto,
+    });
+  }
+
+  updateProfilePicture(id: number, filename: string) {
+    return this.prismaService.developer.update({
+      where: { id },
+      data: { imageSrc: `/uploads/developers/${filename}` },
     });
   }
 

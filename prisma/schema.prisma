@@ -13,25 +13,46 @@ model Developer {
   email          String     @unique
   password       String
   isAdmin        Boolean    @default(false) // Indicates if the developer is an admin
+  imageSrc       String?
 
   //RELATIONSHIPS
   tasks          Task[]     @relation("DeveloperTasks") // Many-to-many relationship with tasks
-  projects       Project[]  // One-to-many relationship with projects
+  projectDevelopers ProjectDeveloper[] // One-to-many relationship with ProjectDeveloper
   comments       Comment[]  // One-to-many relationship with comments
 }
 
 model Project {
   id             Int        @id @default(autoincrement())
-  name           String
+  title          String
   description    String
+  imageSrc       String?
+  startDate      DateTime
+  endDate        DateTime
+  status         Status     @default(BACKLOG) 
   createdAt      DateTime   @default(now())
-  creatorId      Int
 
   //RELATIONSHIPS
   tasks          Task[]     // One-to-many relationship with tasks
+  projectDevelopers ProjectDeveloper[] // One-to-many relationship with ProjectDeveloper
+
+}
+
+model ProjectDeveloper {
+  projectId    Int
+  developerId  Int
+
+  @@id([projectId, developerId])
 
   //CONSTRAINTS
-  creator        Developer @relation(fields: [creatorId], references: [id])
+  project      Project   @relation(fields: [projectId], references: [id])
+  developer    Developer @relation(fields: [developerId], references: [id])
+}
+
+enum Status {
+  BACKLOG
+  TODO
+  ON_PROCESS
+  DONE
 }
 
 model Task {
@@ -39,7 +60,7 @@ model Task {
   name           String
   description    String
   createdAt      DateTime   @default(now())
-  status         TaskStatus @default(PENDING)     // ENUM 'pending = 0', 'in progress = 1', 'completed = 2'
+  status         Status     @default(BACKLOG)     // ENUM 'pending = 0', 'in progress = 1', 'completed = 2'
   dueDate        DateTime?
   projectId      Int
   
@@ -60,10 +81,4 @@ model Comment {
   //CONSTRAINTS
   task     Task    @relation(fields: [taskId], references: [id])
   developer   Developer  @relation(fields: [developerId], references: [id])
-}
-
-enum TaskStatus {
-  PENDING
-  IN_PROGRESS
-  COMPLETED
 }

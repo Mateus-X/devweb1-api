@@ -16,4 +16,7 @@ export class CreateDeveloperDto {
 
     @IsBoolean()
     isAdmin: boolean;
+
+    @IsString()
+    imageSrc: string;
 }

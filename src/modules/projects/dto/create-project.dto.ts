@@ -1,6 +1,11 @@
+import { Status } from "@prisma/client";
+
 export class CreateProjectDto {
-    name: string;
+    title: string;
     description: string;
-    creatorId: number;
-    
+    imageSrc?: string;
+    startDate: Date;
+    endDate: Date;
+    status: Status;
+    developers: number[];
 }
