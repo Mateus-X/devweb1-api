@@ -1,15 +1,28 @@
-version: "3.8"
+version: '3.8'
+
 services:
-  postgres:
+  api:
+    build:
+      context: . # Diretório raiz do projeto
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: "postgresql://admin:123123@db:5432/devweb1?schema=public"
+      NODE_ENV: development
+    depends_on:
+      - db # Garante que o banco inicie antes da API
+
+  db:
     image: postgres:latest
     container_name: devweb1-db
     restart: always
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 123123
       POSTGRES_DB: devweb1
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
