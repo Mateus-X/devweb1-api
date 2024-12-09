@@ -7,5 +7,5 @@ export class CreateProjectDto {
     startDate: Date;
     endDate: Date;
     status: Status;
-    developers: number[];
+    users: number[];
 }

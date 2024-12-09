@@ -15,9 +15,9 @@ export class EnsureUploadProjectsPathExistsMiddleware implements NestMiddleware 
   }
 }
 
-export class EnsureUploadDevelopersPathExistsMiddleware implements NestMiddleware {
+export class EnsureUploadUsersPathExistsMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    const uploadPath = path.join(__dirname, '..', '..', 'uploads', 'developers');
+    const uploadPath = path.join(__dirname, '..', '..', 'uploads', 'users');
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true });
     }

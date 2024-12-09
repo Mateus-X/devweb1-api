@@ -11,13 +11,13 @@ export class TasksService {
     return this.prismaService.task.create({
       data: {
         ...data,
-        developers: {
-          connect: data.developers.map((developerId) => ({ id: developerId })),
+        users: {
+          connect: data.users.map((userId) => ({ id: userId })),
         },
       },
       include: {
         project: true,
-        developers: true,
+        users: true,
       },
     });
   }
@@ -26,7 +26,7 @@ export class TasksService {
     return this.prismaService.task.findMany({
       include: {
         project: true,
-        developers: true,
+        users: true,
       },
     });
   }
@@ -36,24 +36,24 @@ export class TasksService {
       where: { id },
       include: {
         project: true,
-        developers: true,
+        users: true,
       },
     });
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto) {
-    const { developers, ...rest } = updateTaskDto;
+    const { users, ...rest } = updateTaskDto;
     return this.prismaService.task.update({
       where: { id },
       data: {
         ...rest,
-        developers: developers ? {
-          set: developers.map((developerId) => ({ id: developerId })),
+        users: users ? {
+          set: users.map((userId) => ({ id: userId })),
         } : undefined, 
       },
       include: {
         project: true,
-        developers: true,
+        users: true,
       },
     });
   }

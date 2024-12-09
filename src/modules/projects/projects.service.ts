@@ -22,7 +22,7 @@ export class ProjectsService {
   findOne(id: number) {
     return this.prismaService.project.findUnique({
       where: { id },
-      include: { projectDevelopers: true },
+      include: { projectUsers: true },
     });
   }
 

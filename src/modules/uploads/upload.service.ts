@@ -9,7 +9,7 @@ export class UploadService implements MulterOptionsFactory {
   createMulterOptions(): MulterModuleOptions {
     return {
       storage: diskStorage({
-        destination: './uploads/developers',
+        destination: './uploads/users',
         filename: (req, file, cb) => {
           const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
           const ext = extname(file.originalname);

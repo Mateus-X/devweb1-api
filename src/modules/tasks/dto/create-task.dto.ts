@@ -21,6 +21,6 @@ export class CreateTaskDto {
   
     @IsArray()
     @IsInt({ each: true })
-    developers: number[]; // IDs dos desenvolvedores atribuídos
+    users: number[]; // IDs dos desenvolvedores atribuídos
   }
   
