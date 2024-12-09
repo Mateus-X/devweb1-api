@@ -16,22 +16,28 @@ model Developer {
 
   //RELATIONSHIPS
   tasks          Task[]     @relation("DeveloperTasks") // Many-to-many relationship with tasks
-  projects       Project[]  // One-to-many relationship with projects
   comments       Comment[]  // One-to-many relationship with comments
+  projects       Project[]  @relation("DeveloperProjects") // Many-to-many relationship with projects
 }
 
 model Project {
   id             Int        @id @default(autoincrement())
   name           String
   description    String
-  createdAt      DateTime   @default(now())
-  creatorId      Int
+  startDate      String
+  endDate        String?
+  status         Status @default(BACKLOG) // ENUM 'planned', 'in progress', 'completed'
 
   //RELATIONSHIPS
   tasks          Task[]     // One-to-many relationship with tasks
+  developers     Developer[] @relation("DeveloperProjects") // Many-to-many relationship with developers
+}
 
-  //CONSTRAINTS
-  creator        Developer @relation(fields: [creatorId], references: [id])
+enum Status {
+  BACKLOG 
+  TODO 
+  ON_PROCESS 
+  DONE 
 }
 
 model Task {
@@ -39,7 +45,7 @@ model Task {
   name           String
   description    String
   createdAt      DateTime   @default(now())
-  status         TaskStatus @default(PENDING)     // ENUM 'pending = 0', 'in progress = 1', 'completed = 2'
+  status         TaskStatus @default(BACKLOG)     // ENUM 'pending = 0', 'in progress = 1', 'completed = 2'
   dueDate        DateTime?
   projectId      Int
   
@@ -63,7 +69,8 @@ model Comment {
 }
 
 enum TaskStatus {
-  PENDING
-  IN_PROGRESS
-  COMPLETED
+  BACKLOG
+  TODO
+  ONPROCESS
+  DONE
 }
